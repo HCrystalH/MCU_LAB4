@@ -59,11 +59,19 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define MAX_BUFFER_SIZE  30
 uint8_t temp = 0;
-
-void HAL_UART_RxcpltCallback(UART_HandleTypeDef *huart){
+uint8_t buffer[MAX_BUFFER_SIZE];
+uint8_t index_buffer = 0;
+uint8_t buffer_flag = 0;
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if(huart->Instance == USART2){
-		HAL_UART_Transmit(&huart2, &temp, 1, 50);
+
+		//HAL_UART_Transmit(&huart2, &temp, 1, 50);
+		buffer[index_buffer++] = temp;
+		if(index_buffer == 30) index_buffer = 0;
+
+		buffer_flag = 1;
 		HAL_UART_Receive_IT(&huart2, &temp, 1);
 	}
 }
@@ -117,14 +125,19 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);
-	  ADC_value = HAL_ADC_GetValue(&hadc1);
+	 	  ADC_value = HAL_ADC_GetValue(&hadc1);
 
-	  intToStr(ADC_value, str);
-	  HAL_UART_Transmit(&huart2, (uint32_t *)str,strlen(str), 1000);
-	  HAL_Delay(500);
-
-//	  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-//	  HAL_Delay(500);
+	 	  intToStr(ADC_value, str);
+	 	  HAL_UART_Transmit(&huart2, (uint32_t *)str,strlen(str), 1000);
+	 	  HAL_Delay(500);
+//	  while (1){
+//	      if(buffer_flag == 1){
+//	          command_parser_fsm();
+//	          buffer_flag = 0;
+//	      }
+//	      uart_communiation_fsm();
+//	  }
+	  //	  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
   }
   /* USER CODE END 3 */
 }

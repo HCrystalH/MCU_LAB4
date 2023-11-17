@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "stdio.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -67,6 +67,11 @@ void HAL_UART_RxcpltCallback(UART_HandleTypeDef *huart){
 		HAL_UART_Receive_IT(&huart2, &temp, 1);
 	}
 }
+char str[20];
+
+void intToStr(int num, char*buffer){
+	sprintf(buffer,"%d\n",num);
+}
 /* USER CODE END 0 */
 
 /**
@@ -105,13 +110,21 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint32_t ADC_value = 0;
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 	  HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);
+	  ADC_value = HAL_ADC_GetValue(&hadc1);
+
+	  intToStr(ADC_value, str);
+	  HAL_UART_Transmit(&huart2, (uint32_t *)str,strlen(str), 1000);
 	  HAL_Delay(500);
+
+//	  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+//	  HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }

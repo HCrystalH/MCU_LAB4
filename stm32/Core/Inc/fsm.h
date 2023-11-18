@@ -9,6 +9,7 @@
 #define INC_FSM_H_
 
 #define MAX_BUFFER_SIZE 30
+
 extern uint8_t temp;
 extern uint8_t buffer[MAX_BUFFER_SIZE];
 extern uint8_t index_buffer;

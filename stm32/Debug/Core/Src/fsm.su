@@ -1,4 +1,3 @@
-fsm.c:31:6:command_parser_fsm	8	static
-fsm.c:57:9:GetStringLength	24	static
-fsm.c:72:9:Uart1_Received_Buffer_Available	4	static
-fsm.c:78:6:uart_communication_fsm	8	static
+fsm.c:29:6:command_parser_fsm	8	static
+fsm.c:55:9:GetStringLength	24	static
+fsm.c:69:6:uart_communication_fsm	8	static

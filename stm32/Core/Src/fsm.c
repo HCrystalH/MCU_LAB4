@@ -7,14 +7,12 @@
 
 #include "main.h"
 #include "stdio.h"
-#include "stdint.h"
-#define RX_BUFFER_SIZE 30
+
 #define MAX_BUFFER_SIZE  30
 // Buffer to store received data
 ADC_HandleTypeDef hadc1;
 UART_HandleTypeDef huart2;
 
-char rx_buffer[RX_BUFFER_SIZE];
 uint8_t temp = 0;
 uint8_t buffer[MAX_BUFFER_SIZE];
 uint8_t index_buffer = 0;
@@ -67,14 +65,7 @@ uint8_t GetStringLength(uint8_t* buffer){
 	return len;
 }
 
-uint8_t receiveBufferIndexTail;
-uint8_t receiveBufferIndexHead;
-uint8_t Uart1_Received_Buffer_Available(void){
-	if(receiveBufferIndexTail != receiveBufferIndexHead) return 1;
-	return 0;
-}
 
-// We already have UART transmit and receive functions
 void uart_communication_fsm(){
 	static uint8_t state = 0;
 	switch(state){

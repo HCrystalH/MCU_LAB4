@@ -5,14 +5,20 @@
  *      Author: Admin
  */
 
-#include "main.c"
+#include "main.h"
 #include "stdio.h"
 #include "stdint.h"
 #define RX_BUFFER_SIZE 30
-
+#define MAX_BUFFER_SIZE  30
 // Buffer to store received data
-char rx_buffer[RX_BUFFER_SIZE];
+ADC_HandleTypeDef hadc1;
+UART_HandleTypeDef huart2;
 
+char rx_buffer[RX_BUFFER_SIZE];
+uint8_t temp = 0;
+uint8_t buffer[MAX_BUFFER_SIZE];
+uint8_t index_buffer = 0;
+uint8_t buffer_flag = 0;
 enum CommandState{
 	IDLE,
 	RECEIVING,

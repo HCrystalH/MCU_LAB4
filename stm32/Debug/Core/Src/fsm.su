@@ -1,10 +1,4 @@
-main.c:85:5:main	8	static
-main.c:136:6:SystemClock_Config	88	static
-main.c:179:13:MX_ADC1_Init	24	static
-main.c:224:13:MX_USART2_UART_Init	8	static
-main.c:257:13:MX_GPIO_Init	32	static
-main.c:290:6:Error_Handler	4	static,ignoring_inline_asm
-fsm.c:25:6:command_parser_fsm	8	static
-fsm.c:51:9:GetStringLength	24	static
-fsm.c:66:9:Uart1_Received_Buffer_Available	4	static
-fsm.c:72:6:uart_communication_fsm	8	static
+fsm.c:31:6:command_parser_fsm	8	static
+fsm.c:57:9:GetStringLength	24	static
+fsm.c:72:9:Uart1_Received_Buffer_Available	4	static
+fsm.c:78:6:uart_communication_fsm	8	static

@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "fsm.h"
-//#include "softwaretimer.h"
+#include "softwaretimer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,14 +75,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		buffer[index_buffer++] = temp;
 
 		if(index_buffer == 30) index_buffer = 0;
-
-		HAL_UART_Receive_IT(&huart2, &temp, 1);
 		buffer_flag = 1;
+		HAL_UART_Receive_IT(&huart2, &temp, 1);
+
 	}
 }
-uint32_t GetCommandData(){
-	return HAL_ADC_GetValue(&hadc1);
-}
+//uint32_t GetCommandData(){
+//	return HAL_ADC_GetValue(&hadc1);
+//}
 /* USER CODE END 0 */
 
 /**
@@ -117,8 +117,12 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start(&hadc1);
+
   HAL_UART_Receive_IT(&huart2, &temp, 1);
+  HAL_TIM_Base_Start_IT(&htim2);
+  setTimer1(100);
+  setTimer2(100);
+  HAL_ADC_Start(&hadc1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,12 +133,16 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+//	  if(timerflag1 == 1){
+//		  HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+//		  setTimer1(100);
+//	  }
+	  ADC_Value = HAL_ADC_GetValue(&hadc1);
 	  if(buffer_flag == 1){
 		  command_parser_fsm();
 	      buffer_flag = 0;
 	  }
 	  uart_communication_fsm();
-	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -247,7 +255,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 7999;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 65535;
+  htim2.Init.Period = 9;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)

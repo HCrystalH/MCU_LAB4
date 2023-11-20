@@ -13,9 +13,11 @@ int timer1_counter;
 int timer2_counter;
 void setTimer1(int duration){
 	timer1_counter = duration;
+	timerflag1 =0;
 }
 void setTimer2(int duration){
 	timer2_counter = duration;
+	timerflag2 =0;
 }
 void timerRun(){
 	timer1_counter--;

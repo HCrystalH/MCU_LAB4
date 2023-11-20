@@ -1,3 +1,2 @@
-fsm.c:31:6:command_parser_fsm	8	static
-fsm.c:63:9:GetStringLength	24	static
-fsm.c:77:6:uart_communication_fsm	8	static
+fsm.c:98:6:command_parser_fsm	8	static
+fsm.c:151:6:uart_communication_fsm	8	static
